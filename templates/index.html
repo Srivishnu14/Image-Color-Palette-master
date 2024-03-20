@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Color Palette Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  
+  
+    <style>
+      #row_value{
+        color: white;
+        background-color: black;
+      }
+
+      @media (max-width:500px){
+          #upload_img{
+            width: 80%;
+          }
+          #table_data{
+            width: 80%;
+            margin-left: 10%;
+          }
+      }
+
+      @media (min-width:600px){
+          #table_data{
+            width: 60%;
+            margin-left: 20%;
+          }
+            #upload_img{
+            width: 40%;
+          }
+      }
+
+
+    </style>
+  <script>
+ $('input[type=file]').change(function () {
+    console.log(this.files[0].mozFullPath);
+});
+  </script>
+</head>
+<body>
+    <h1 style="text-align: center;color: lightskyblue;border: 1px solid green; background-color: black;">Image Colour Palette Generator</h1>
+    <h2 style="text-align: center; color:lightcoral;">Select the image</h2>
+    <br>
+
+    <form action="{{url_for('index')}}" style="display: flex; justify-content: center;" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="formFile" class="form-label"></label>
+        <input accept="image/png, image/gif, image/jpeg" class="form-control" type="file" name="file" id="formFile" required>
+        <br>
+        <button class="btn btn-primary"  type="submit">Submit</button>
+    </div>
+    </form>
+
+{% if show: %}
+    <div class="text-center">
+    <img id="upload_img" src="static/file/{{image}}" class="rounded">
+    </div>
+
+    <div>
+      <table id="table_data" class="table" style="text-align: center; font-size: large;">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th scope="col">Color</th>
+            <th scope="col">Color RGB Code</th>
+            <th scope="col">Color Hex Code</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        {% for i in range(len) %}
+          <tr>
+            <th scope="row">{{i+1}}</th>
+            <td style="background-color:{{hex[i]}}"></td>
+            <td>{{palette[i]}}</td>
+            <td>{{hex[i]}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+<br>
+<br>
+<br>
+{% endif %}
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
+
+
